@@ -54,7 +54,7 @@ public abstract class AbstractTaskList {
      * Method to get the number of tasks in the current list
      *
      * @return the number of tasks in the current list
-     */	    
+     */
     public int size() {
         return counterOfTasksInList;
     }
@@ -64,7 +64,7 @@ public abstract class AbstractTaskList {
      *
      * @param index is the task number in the list which should be returned (starting from zero)
      * @return the task whose index in the list is equal to the input
-     */	    
+     */
     public abstract Task getTask(int index);
     
     /**

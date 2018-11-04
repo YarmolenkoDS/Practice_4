@@ -86,7 +86,6 @@ public class Task {
         return result;
     }
 
- 
     /**
      * Method for obtaining task title
      *

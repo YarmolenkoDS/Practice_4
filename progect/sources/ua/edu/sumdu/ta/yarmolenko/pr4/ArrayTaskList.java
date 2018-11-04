@@ -95,10 +95,10 @@ public class ArrayTaskList extends AbstractTaskList {
      */	
     public Task getTask(int index) {
         if ((index > size()) || (index < 0)) {
-			System.out.println("The index must be greater than zero and" 
+            System.out.println("The index must be greater than zero and" 
                 + "less than the number of tasks in the current list (" + size() + ")");
             return null;
-		} else {
+        } else {
             return taskList[index];
         }
     }

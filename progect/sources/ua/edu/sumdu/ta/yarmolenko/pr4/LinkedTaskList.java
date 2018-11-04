@@ -60,12 +60,12 @@ public class LinkedTaskList extends AbstractTaskList {
     public void remove(Task task) {
         if (task == null) {
             System.out.println("Deletion empty tasks is prohibited"); 
-			return;
-			
-        }	
-		if (firstElementOfList.listItemData == null){
-			return;
-		}
+            return;
+            
+        }
+        if (firstElementOfList.listItemData == null){
+            return;
+        }
 
         while (firstElementOfList.listItemData.equals(task)) {
             if (firstElementOfList.next != null) {
@@ -74,21 +74,21 @@ public class LinkedTaskList extends AbstractTaskList {
             } else {
                 firstElementOfList.listItemData = null;
                 counterOfTasksInList--;
-			    return;
+                return;
             }
         }
 
         LinkedListNode prevElementOfList = firstElementOfList;
-		LinkedListNode currentElementOfList = firstElementOfList;
+        LinkedListNode currentElementOfList = firstElementOfList;
         while (prevElementOfList != null) {
-			currentElementOfList = prevElementOfList.next;
-			while (currentElementOfList != null && currentElementOfList.listItemData.equals(task)){
-				counterOfTasksInList--;
-				currentElementOfList = currentElementOfList.next;
-			}
-			prevElementOfList.next = currentElementOfList;
+            currentElementOfList = prevElementOfList.next;
+            while (currentElementOfList != null && currentElementOfList.listItemData.equals(task)){
+                counterOfTasksInList--;
+                currentElementOfList = currentElementOfList.next;
+            }
+            prevElementOfList.next = currentElementOfList;
             prevElementOfList = currentElementOfList;
-		}
+        }
 
 
     }
@@ -101,10 +101,10 @@ public class LinkedTaskList extends AbstractTaskList {
      */	
     public Task getTask(int index) {
         if ((index >= size()) || (index < 0)) {
-			System.out.println("The index must be >= zero and" 
+            System.out.println("The index must be >= zero and" 
                                 + "less than the number of tasks in the current list (" + size() + ")");
             return null;
-		} else {
+        } else {
             int tempIndex = 0;
             LinkedListNode currentElementOfList = firstElementOfList;
             while (tempIndex != index){
