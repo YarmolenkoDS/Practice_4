@@ -50,6 +50,44 @@ public class Task {
     }
 
     /**
+     * Method to comparing objects
+     *
+     * @return boolean value containing the result of comparing objects
+     */	
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Task tosk = (Task) obj;
+        return (taskTitle != null && taskTitle.equals(tosk.getTitle()))
+            && (taskActive == tosk.isActive()) && (taskRepeated == tosk.isRepeated())
+            && (taskTime == tosk.getTime()) && (taskStart == tosk.getStartTime())
+            && (taskEnd == tosk.getEndTime()) && (taskRepeatInterval == tosk.getRepeatInterval());
+    }
+
+    /**
+     * Method to generate an integer object code
+     *
+     * @return an integer object code
+     */	
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((taskTitle == null) ? 0 : taskTitle.hashCode());
+        result = prime * result + (taskActive ? 1 : 0);
+        result = prime * result + (taskRepeated ? 1 : 0);
+        result = prime * result + taskTime;
+        result = prime * result + taskStart;
+        result = prime * result + taskEnd;
+        result = prime * result + taskRepeatInterval;
+        return result;
+    }
+
+ 
+    /**
      * Method for obtaining task title
      *
      * @return String value containing task's title

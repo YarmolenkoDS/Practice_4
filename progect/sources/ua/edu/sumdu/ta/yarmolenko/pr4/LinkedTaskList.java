@@ -36,12 +36,17 @@ public class LinkedTaskList extends AbstractTaskList {
         if (task != null) {   
             task.setTitle(START_OF_TASK_TITLE + task.getTitle());
             LinkedListNode lastElementOfList = new LinkedListNode(task);
-            LinkedListNode currentElementOfList = firstElementOfList;
-            while (currentElementOfList.next != null){
-                currentElementOfList = currentElementOfList.next;
+            if (firstElementOfList.listItemData == null) {
+                firstElementOfList = lastElementOfList;
+                counterOfTasksInList++;
+            } else {
+                LinkedListNode currentElementOfList = firstElementOfList;
+                while (currentElementOfList.next != null){
+                    currentElementOfList = currentElementOfList.next;
+                }
+                currentElementOfList.next = lastElementOfList;
+                counterOfTasksInList++; 
             }
-            currentElementOfList.next = lastElementOfList;
-            counterOfTasksInList++;  
         } else {
             System.out.println("Adding empty tasks is prohibited");
         }
@@ -53,21 +58,39 @@ public class LinkedTaskList extends AbstractTaskList {
      * @param task is an object of type task to be deleted in the task list
      */	
     public void remove(Task task) {
-        if (task != null) {
-            LinkedListNode currentElementOfList = firstElementOfList;
-            while (currentElementOfList.next != null) {
-                if (currentElementOfList.next.listItemData.equals(task)) {
-                    currentElementOfList.next = currentElementOfList.next.next;
-                    currentElementOfList = currentElementOfList.next;
-                    counterOfTasksInList--;
-                } else {
-                    currentElementOfList = currentElementOfList.next;
-                }
-                
-            }            
-        } else {
+        if (task == null) {
             System.out.println("Deletion empty tasks is prohibited"); 
+			return;
+			
+        }	
+		if (firstElementOfList.listItemData == null){
+			return;
+		}
+
+        while (firstElementOfList.listItemData.equals(task)) {
+            if (firstElementOfList.next != null) {
+                firstElementOfList = firstElementOfList.next;
+                counterOfTasksInList--;
+            } else {
+                firstElementOfList.listItemData = null;
+                counterOfTasksInList--;
+			    return;
+            }
         }
+
+        LinkedListNode prevElementOfList = firstElementOfList;
+		LinkedListNode currentElementOfList = firstElementOfList;
+        while (prevElementOfList != null) {
+			currentElementOfList = prevElementOfList.next;
+			while (currentElementOfList != null && currentElementOfList.listItemData.equals(task)){
+				counterOfTasksInList--;
+				currentElementOfList = currentElementOfList.next;
+			}
+			prevElementOfList.next = currentElementOfList;
+            prevElementOfList = currentElementOfList;
+		}
+
+
     }
 
     /**
@@ -83,7 +106,7 @@ public class LinkedTaskList extends AbstractTaskList {
             return null;
 		} else {
             int tempIndex = 0;
-            LinkedListNode currentElementOfList = firstElementOfList.next;
+            LinkedListNode currentElementOfList = firstElementOfList;
             while (tempIndex != index){
                 currentElementOfList = currentElementOfList.next;
                 tempIndex++;
@@ -105,11 +128,11 @@ public class LinkedTaskList extends AbstractTaskList {
         Task[] taskListFromTo = new Task[size()];
         int indexFromTo = 0;
         LinkedListNode currentElementOfList = firstElementOfList;
-        while (currentElementOfList.next != null){
-            if ((currentElementOfList.next.listItemData.isActive() == true) 
-                    && (currentElementOfList.next.listItemData.nextTimeAfter(from) <= to)
-                    && (currentElementOfList.next.listItemData.nextTimeAfter(from) != -1)) {
-                taskListFromTo[indexFromTo] = currentElementOfList.next.listItemData;
+        while (currentElementOfList != null){
+            if ((currentElementOfList.listItemData.isActive() == true) 
+                    && (currentElementOfList.listItemData.nextTimeAfter(from) <= to)
+                    && (currentElementOfList.listItemData.nextTimeAfter(from) != -1)) {
+                taskListFromTo[indexFromTo] = currentElementOfList.listItemData;
                 indexFromTo ++;
             }
             currentElementOfList = currentElementOfList.next;
